@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Stranger Things Trivia</title>
 </head>
@@ -20,27 +19,24 @@
                     <h2>Trivia</h2>
                 </div>
                 <div id="startPage">
-                    <h1>Welcome to Stranger things Trivia!</h1>
-                    <div id="instructions">
-                        <h3>You will have 15 seconds to answer each question</h3>
-                        <h3>If time runs out you get the question wrong!</h3>
-                        <h3>There are 10 questions total.</h3>
-                        <h2>Good Luck!!</h2>
-                    </div>
-                    <button class='btn btn-primary' id='startBtn' name='Start Game'>Start Game</button>
+                    <h1 id="welcome"></h1>
+                    <div id="instructions"></div>
                 </div>
                 <div id="questionPage">
                     <h2 id="question"></h2>
-                    <div class="timer"></div>
                     <h3 id="answer1"></h3>
                     <h3 id="answer2"></h3>
                     <h3 id="answer3"></h3>
                     <h3 id="answer4"></h3>
                 </div>
                 <div id="questionResult">
-                    <div class="timer"></div>
                     <h2 id="winLose"></h2>
                     <img src="" id="winLoseImg">
+                </div>
+                <div id="resultsPage">
+                    <h2 id="result"></h2>
+                    <h3 id="correct"></h3>
+                    <h3 id="incorrect"></h3>
                 </div>
             </div>
         </div>

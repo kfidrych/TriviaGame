@@ -53,19 +53,20 @@ var questions = {
 
 var indexArr = [];
 var numQuestions = Object.keys(questions).length;
-var intervalId;
-var timerRunning = false;
 var count = 0;
-var showInterval;
 var number = 0;
 var randomKey;
 var timeout;
+var results = {
+    correct: 0,
+    incorrect: 0,
+};
 
 $(document).ready(function () {
-    $("#startBtn").on("click", pickQuestion);
+    startGame();
 
     function pickQuestion() {
-        $("#startPage").empty();
+        clearPage();
         randomIndex();        
         if (count === numQuestions){
             showResults();
@@ -116,16 +117,53 @@ $(document).ready(function () {
     }
 
     function correct() {
+        results.correct++;
+        clearPage();
         $("#winLose").html("Congrats, you got it right!");
-        timeout = setTimeout(nextQuestion, 4000);
+        timeout = setTimeout(nextQuestion, 1000);
     }
 
     function incorrect() {
-        $("#winLose").html("FAIL! Sorry, you're wrong");
-        timeout = setTimeout(nextQuestion, 4000);
+        results.incorrect++;
+        clearPage();
+        $("#winLose").html("FAIL! Sorry, you're wrong")
+        .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
+        timeout = setTimeout(nextQuestion, 3000);
+    }
+
+    function clearPage() {
+        $("#welcome").empty();
+        $("#instructions").empty();
+        $("#question").empty();
+        $("#answer1").empty();
+        $("#answer2").empty();
+        $("#answer3").empty();
+        $("#answer4").empty();
+        $("#result").empty();
+        $("#correct").empty();
+        $("#incorrect").empty();
+    }
+
+    function startGame() {
+        clearPage();
+        $("#welcome").html("Welcome to Stranger things Trivia!");
+        $("#instructions").html("<h3>You will have 15 seconds to answer each question</h3>")
+            .append("<h3>If time runs out you get the question wrong!</h3>")
+            .append("<h3>There are 10 questions total.</h3>")
+            .append("<h2>Good Luck!!</h2>")
+            .append("<button class='btn btn-primary' id='startBtn' name='Start Game'>Start Game</button>");
+        $("#startBtn").on("click", pickQuestion);
     }
 
     function showResults() {
-
+        clearPage();
+        if (results.correct > results.incorrect) {
+            $("#result").html("Congratulations! You Won!");
+        } else {
+            $("#result").html("Sorry, you didn't get enough correct...");
+        }
+        $("#correct").html(`You got: ${results.correct} correct!`);
+        $("#incorrect").html(`You got: ${results.incorrect} wrong :(`);
+        timeout = setTimeout(startGame, 3000);
     }
 });
