@@ -85,10 +85,10 @@ $(document).ready(function () {
 
         $("#question").html(randomQuestion.question);
 
-        $("#answer1").html(`<h3 class='choices'>${randomQuestion.answers[0]}<h3>`);
-        $("#answer2").html(`<h3 class='choices'>${randomQuestion.answers[1]}<h3>`);
-        $("#answer3").html(`<h3 class='choices'>${randomQuestion.answers[2]}<h3>`);
-        $("#answer4").html(`<h3 class='choices'>${randomQuestion.answers[3]}<h3>`);
+        $("#answer1").html(`${randomQuestion.answers[0]}`);
+        $("#answer2").html(`${randomQuestion.answers[1]}`);
+        $("#answer3").html(`${randomQuestion.answers[2]}`);
+        $("#answer4").html(`${randomQuestion.answers[3]}`);
         $(".choices").on("click", function () {
             var self = this;
             clearTimeout(timeout);
@@ -120,13 +120,13 @@ $(document).ready(function () {
         results.correct++;
         clearPage();
         $("#winLose").html("Congrats, you got it right!");
-        timeout = setTimeout(nextQuestion, 1000);
+        timeout = setTimeout(nextQuestion, 3000);
     }
 
     function incorrect() {
         results.incorrect++;
         clearPage();
-        $("#winLose").html("FAIL! Sorry, you're wrong")
+        $("#winLose").html("FAIL!")
         .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
         timeout = setTimeout(nextQuestion, 3000);
     }
@@ -147,10 +147,10 @@ $(document).ready(function () {
     function startGame() {
         clearPage();
         $("#welcome").html("Welcome to Stranger things Trivia!");
-        $("#instructions").html("<h3>You will have 15 seconds to answer each question</h3>")
-            .append("<h3>If time runs out you get the question wrong!</h3>")
-            .append("<h3>There are 10 questions total.</h3>")
-            .append("<h2>Good Luck!!</h2>")
+        $("#instructions").html("<div>You will have 15 seconds to answer each question</div>")
+            .append("<div>If time runs out you get the question wrong!</div>")
+            .append("<div>There are 10 questions total.</div>")
+            .append("<div>Good Luck!!</div>")
             .append("<button class='btn btn-primary' id='startBtn' name='Start Game'>Start Game</button>");
         $("#startBtn").on("click", pickQuestion);
     }

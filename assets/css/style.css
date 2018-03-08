@@ -1,0 +1,86 @@
+body {
+    background-image: url("../images/background.jpeg");
+    height: 100vh;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #b40c0e;
+    font-family: "strangerFont";
+}
+
+.container {
+    padding: 0px;
+    text-align: center;
+}
+
+@font-face {
+    font-family: strangerFont;
+    src: url(assets/fonts/BenguiatBold.ttf);
+}
+
+#title img {
+    height: 300px;
+    width: auto;
+    opacity: .8;
+}
+
+#welcome {
+    font-size: 40px;
+}
+
+#trivia {
+    font-size: 40px;
+    position: absolute;
+    top: 240px;
+    left: 44%;
+    opacity: .75;
+}
+
+#instructions {
+    font-size: 30px;
+}
+
+#question {
+    font-size: 25px;
+}
+
+#answers {
+    font-size: 20px;
+}
+
+.choices:hover {
+    background: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+#startBtn {
+    background: rgba(0, 0, 0, 0.4);
+    color: #b40c0e;
+    border: none;
+}
+#startBtn:hover {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+@media only screen and (max-width: 400px) {
+    #title img {
+        width: 100%;
+        height: auto;
+    }
+
+    #welcome {
+        font-size: 25px;
+    }
+
+    #instructions {
+        font-size: 20px;
+    }
+
+    #trivia {
+        font-size: 25px;
+        position: relative;
+        top: 36%;
+        left: 0px;
+        opacity: 1;
+    }
+}
