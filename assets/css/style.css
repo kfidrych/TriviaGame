@@ -73,7 +73,7 @@ body {
     }
 
     #instructions {
-        font-size: 20px;
+        font-size: 19px;
     }
 
     #trivia {
@@ -89,6 +89,6 @@ body {
     }
 
     .choices:active {
-        background: (0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.8);
     }
 }
