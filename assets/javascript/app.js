@@ -51,60 +51,68 @@ var questions = {
     }
 }
 
-var indexArr = [];
 var numQuestions = Object.keys(questions).length;
+var indexArr = [];
 var count = 0;
-var number = 0;
-var randomKey;
-var timeout;
+var randomIndex = 0;
+var randomKey = function() { return "Q" + randomIndex };
+var currentQuestion = function() { return questions[randomKey()] };
+var timeout = null;
 var qCorrect = 0;
 var qIncorrect = 0;
+
+var QUESTION_TIME = 15 * 1000;
+var RESULT_TIME = 3 * 1000;
 
 $(document).ready(function () {
     startGame();
 
     function pickQuestion() {
         clearPage();
-        randomIndex();
         if (count === numQuestions) {
             showResults();
-        } else if (indexArr.indexOf(number) == -1) {
-            indexArr.push(number);
-            showQuestion();
         } else {
-            pickQuestion();
+            getRandomIndex();
+            showQuestion();
+        }
+    }
+
+    function getRandomIndex() {
+        randomIndex = (Math.floor(Math.random() * numQuestions) + 1);
+        if (indexArr.indexOf(randomIndex) == -1) {
+            indexArr.push(randomIndex);
+        } else {
+            getRandomIndex();
         }
     }
 
     function showQuestion() {
-        timeout = setTimeout(incorrect, 15 * 1000);
-        var randomQuestion = questions[randomKey];
-        $(".choices").show();
-        $("#question").html(randomQuestion.question);
+        timeout = setTimeout(incorrect, QUESTION_TIME);
 
-        $("#answer1").html(randomQuestion.answers[0]);
-        $("#answer2").html(randomQuestion.answers[1]);
-        $("#answer3").html(randomQuestion.answers[2]);
-        $("#answer4").html(randomQuestion.answers[3]);
-        $(".choices").on("click", function () {
-            var self = this;
-            clearTimeout(timeout);
-            $(".choices").hide();
-            showAnswer(self);
-        });
+        $(".choices").show();
+        $("#question").html(currentQuestion().question);
+
+        $("#answer1").html(currentQuestion().answers[0])
+        $("#answer2").html(currentQuestion().answers[1])
+        $("#answer3").html(currentQuestion().answers[2])
+        $("#answer4").html(currentQuestion().answers[3])
     }
 
-    function randomIndex() {
-        number = (Math.floor(Math.random() * numQuestions) + 1);
-        randomKey = "Q" + number;
+    function gradeResponse() { 
+        console.log("gradeResponse called");
+        var self = this;
+        clearTimeout(timeout);
+        $(".choices").hide();
+        showAnswer(self);
     }
 
     function showAnswer(answer) {
-        if ($(answer).html() === questions[randomKey].correct) {
-            qCorrect++;
+        console.log("showAnswer called and the answer was ");
+        if ($(answer).html() === currentQuestion().correct) {
+            console.log("correct");
             correct();
         } else {
-            qIncorrect++;
+            console.log("incorrect");
             incorrect();
         }
     }
@@ -117,17 +125,19 @@ $(document).ready(function () {
     }
 
     function correct() {
-        // qCorrect++;
+        qCorrect++;
         $("#winLose").html("Congrats, you got it right!");
-        timeout = setTimeout(nextQuestion, 3000);
+        console.log("qCorrect == " + qCorrect);
+        timeout = setTimeout(nextQuestion, RESULT_TIME);
     }
 
     function incorrect() {
-        // qIncorrect++;
+        qIncorrect++;
         $(".choices").hide();
         $("#winLose").html("FAIL!")
-            .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
-        timeout = setTimeout(nextQuestion, 3000);
+            .append("<h3>" + `The correct answer was: ${currentQuestion().correct}` + "</h3>");
+        console.log("qIncorrect == " + qIncorrect);
+        timeout = setTimeout(nextQuestion, RESULT_TIME); 
     }
 
     function clearPage() {
@@ -153,12 +163,15 @@ $(document).ready(function () {
             .append("<div>Good Luck!!</div>")
             .append("<button class='btn btn-primary' id='startBtn' name='Start Game'>Start Game</button>");
         $("#startBtn").on("click", pickQuestion);
+        $("#answer1").on("click", gradeResponse);
+        $("#answer2").on("click", gradeResponse);
+        $("#answer3").on("click", gradeResponse);
+        $("#answer4").on("click", gradeResponse);
         indexArr = [];
         numQuestions = Object.keys(questions).length;
         count = 0;
-        number = 0;
-        randomKey;
-        timeout;
+        randomIndex = 0;
+        timeout = null;
         qCorrect = 0;
         qIncorrect = 0;
     }
@@ -172,6 +185,6 @@ $(document).ready(function () {
         }
         $("#correct").html(`You got: ${qCorrect} correct!`);
         $("#incorrect").html(`You got: ${qIncorrect} wrong :(`);
-        timeout = setTimeout(startGame, 3000);
+        timeout = setTimeout(startGame, RESULT_TIME);
     }
 });

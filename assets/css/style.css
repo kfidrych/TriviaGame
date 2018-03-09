@@ -13,10 +13,10 @@ body {
     text-align: center;
 }
 
-@font-face {
+/* @font-face {
     font-family: strangerFont;
-    src: url(assets/fonts/BenguiatBold.ttf);
-}
+    src: url(../fonts/BenguiatBold.ttf);
+} */
 
 #title img {
     height: 300px;
