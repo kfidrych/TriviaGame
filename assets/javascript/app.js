@@ -57,18 +57,16 @@ var count = 0;
 var number = 0;
 var randomKey;
 var timeout;
-var results = {
-    correct: 0,
-    incorrect: 0,
-};
+var qCorrect = 0;
+var qIncorrect = 0;
 
 $(document).ready(function () {
     startGame();
 
     function pickQuestion() {
         clearPage();
-        randomIndex();        
-        if (count === numQuestions){
+        randomIndex();
+        if (count === numQuestions) {
             showResults();
         } else if (indexArr.indexOf(number) == -1) {
             indexArr.push(number);
@@ -118,15 +116,15 @@ $(document).ready(function () {
     }
 
     function correct() {
-        results.correct++;
+        qCorrect++;
         $("#winLose").html("Congrats, you got it right!");
         timeout = setTimeout(nextQuestion, 3000);
     }
 
     function incorrect() {
-        results.incorrect++;
+        qIncorrect++;
         $("#winLose").html("FAIL!")
-        .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
+            .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
         timeout = setTimeout(nextQuestion, 3000);
     }
 
@@ -153,17 +151,25 @@ $(document).ready(function () {
             .append("<div>Good Luck!!</div>")
             .append("<button class='btn btn-primary' id='startBtn' name='Start Game'>Start Game</button>");
         $("#startBtn").on("click", pickQuestion);
+        indexArr = [];
+        numQuestions = Object.keys(questions).length;
+        count = 0;
+        number = 0;
+        randomKey;
+        timeout;
+        qCorrect = 0;
+        qIncorrect = 0;
     }
 
     function showResults() {
         clearPage();
-        if (results.correct > results.incorrect) {
+        if (qCorrect > qIncorrect) {
             $("#result").html("Congratulations! You Won!");
         } else {
             $("#result").html("Sorry, you didn't get enough correct...");
         }
-        $("#correct").html(`You got: ${results.correct} correct!`);
-        $("#incorrect").html(`You got: ${results.incorrect} wrong :(`);
+        $("#correct").html(`You got: ${qCorrect} correct!`);
+        $("#incorrect").html(`You got: ${qIncorrect} wrong :(`);
         timeout = setTimeout(startGame, 3000);
     }
 });
