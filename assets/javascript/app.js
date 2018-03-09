@@ -71,7 +71,6 @@ $(document).ready(function () {
         } else if (indexArr.indexOf(number) == -1) {
             indexArr.push(number);
             showQuestion();
-            console.log(indexArr);
         } else {
             pickQuestion();
         }
@@ -102,8 +101,10 @@ $(document).ready(function () {
 
     function showAnswer(answer) {
         if ($(answer).html() === questions[randomKey].correct) {
+            qCorrect++;
             correct();
         } else {
+            qIncorrect++;
             incorrect();
         }
     }
@@ -116,13 +117,14 @@ $(document).ready(function () {
     }
 
     function correct() {
-        qCorrect++;
+        // qCorrect++;
         $("#winLose").html("Congrats, you got it right!");
         timeout = setTimeout(nextQuestion, 3000);
     }
 
     function incorrect() {
-        qIncorrect++;
+        // qIncorrect++;
+        $(".choices").hide();
         $("#winLose").html("FAIL!")
             .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
         timeout = setTimeout(nextQuestion, 3000);
