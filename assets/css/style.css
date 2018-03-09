@@ -87,4 +87,8 @@ body {
     .choices:hover {
         background: none;
     }
+
+    .choices:active {
+        background: (0, 0, 0, 0.8);
+    }
 }
