@@ -37,7 +37,7 @@ var questions = {
     "Q8": {
         question: "Which Tom Cruise movie is playing at Hawkins cinema the ‘Hawk’ when Nancy sees the “Nancy the Slut” graffiti?",
         answers: ["Risky Business", "All The Right Moves", "Legend", "Top Gun"],
-        correct: "All The Right Moves"
+        correct: "All the Right Moves"
     },
     "Q9": {
         question: "Which breakfast product does Eleven steal from the supermarket?",
@@ -82,17 +82,16 @@ $(document).ready(function () {
     function showQuestion() {
         timeout = setTimeout(incorrect, 15 * 1000);
         var randomQuestion = questions[randomKey];
-        $(".choices").show();
+
         $("#question").html(randomQuestion.question);
 
-        $("#answer1").html(randomQuestion.answers[0]);
-        $("#answer2").html(randomQuestion.answers[1]);
-        $("#answer3").html(randomQuestion.answers[2]);
-        $("#answer4").html(randomQuestion.answers[3]);
+        $("#answer1").html(`<h3 class='choices'>${randomQuestion.answers[0]}<h3>`);
+        $("#answer2").html(`<h3 class='choices'>${randomQuestion.answers[1]}<h3>`);
+        $("#answer3").html(`<h3 class='choices'>${randomQuestion.answers[2]}<h3>`);
+        $("#answer4").html(`<h3 class='choices'>${randomQuestion.answers[3]}<h3>`);
         $(".choices").on("click", function () {
             var self = this;
             clearTimeout(timeout);
-            $(".choices").hide();
             showAnswer(self);
         });
     }
@@ -119,13 +118,15 @@ $(document).ready(function () {
 
     function correct() {
         results.correct++;
+        clearPage();
         $("#winLose").html("Congrats, you got it right!");
-        timeout = setTimeout(nextQuestion, 3000);
+        timeout = setTimeout(nextQuestion, 1000);
     }
 
     function incorrect() {
         results.incorrect++;
-        $("#winLose").html("FAIL!")
+        clearPage();
+        $("#winLose").html("FAIL! Sorry, you're wrong")
         .append("<h3>" + `The correct answer was: ${questions[randomKey].correct}` + "</h3>");
         timeout = setTimeout(nextQuestion, 3000);
     }
@@ -134,23 +135,22 @@ $(document).ready(function () {
         $("#welcome").empty();
         $("#instructions").empty();
         $("#question").empty();
-        $("#answer1").html("");
-        $("#answer2").html("");
-        $("#answer3").html("");
-        $("#answer4").html("");
+        $("#answer1").empty();
+        $("#answer2").empty();
+        $("#answer3").empty();
+        $("#answer4").empty();
         $("#result").empty();
         $("#correct").empty();
         $("#incorrect").empty();
-        $("#winLose").empty();
     }
 
     function startGame() {
         clearPage();
         $("#welcome").html("Welcome to Stranger things Trivia!");
-        $("#instructions").html("<div>You will have 15 seconds to answer each question</div>")
-            .append("<div>If time runs out you get the question wrong!</div>")
-            .append("<div>There are 10 questions total.</div>")
-            .append("<div>Good Luck!!</div>")
+        $("#instructions").html("<h3>You will have 15 seconds to answer each question</h3>")
+            .append("<h3>If time runs out you get the question wrong!</h3>")
+            .append("<h3>There are 10 questions total.</h3>")
+            .append("<h2>Good Luck!!</h2>")
             .append("<button class='btn btn-primary' id='startBtn' name='Start Game'>Start Game</button>");
         $("#startBtn").on("click", pickQuestion);
     }
